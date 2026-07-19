@@ -1,0 +1,82 @@
+# nginx-pods.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-a
+  namespace: default
+  labels:
+    app: nginx-a
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-b
+  namespace: default
+  labels:
+    app: nginx-b
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-a
+  namespace: default
+spec:
+  selector:
+    app: nginx-a
+  ports:
+  - port: 80
+    targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-b
+  namespace: default
+spec:
+  selector:
+    app: nginx-b
+  ports:
+  - port: 80
+    targetPort: 80
+
+
+# deny-all-policy.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-all-to-nginx-b
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: nginx-b
+  policyTypes:
+  - Ingress
+  ingress: []
+
+  # allow-nginx-a.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-from-nginx-a
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: nginx-b
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: nginx-a
+
