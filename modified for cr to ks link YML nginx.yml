@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx1
+  labels:
+        app: nginx1
+spec:
+  containers:
+  - name: nginx1
+    image: jackd.azurecr.io/repo1:florida
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx1
+  namespace: default
+  labels:
+    app: nginx1
+ 
+spec:
+  externalTrafficPolicy: Local
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: nginx1
+  type: LoadBalancer
