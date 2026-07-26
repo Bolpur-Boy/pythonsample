@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: baba
+  labels:
+        app: baba
+spec:
+  containers:
+  - name: baba
+    image: honeybee.azurecr.io/repo1:peachjaba:latest
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: baba
+  namespace: default
+  labels:
+    app: baba
+ 
+spec:
+  externalTrafficPolicy: Local
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: baba
+  type: LoadBalancer
