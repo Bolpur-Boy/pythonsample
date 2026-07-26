@@ -2,22 +2,10 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx-a
+  name: nginx-6
   namespace: default
   labels:
-    app: nginx-a
-spec:
-  containers:
-  - name: nginx
-    image: nginx
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: nginx-b
-  namespace: default
-  labels:
-    app: nginx-b
+    app: nginx-6
 spec:
   containers:
   - name: nginx
@@ -26,29 +14,16 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-a
+  name: nginx-6
   namespace: default
 spec:
   selector:
-    app: nginx-a
-  ports:
-  - port: 80
-    targetPort: 80
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-b
-  namespace: default
-spec:
-  selector:
-    app: nginx-b
+    app: nginx-6
   ports:
   - port: 80
     targetPort: 80
 selector:
-    app: nginx-a
-    App: nginx-b
+    app: nginx-6
   type: LoadBalancer
 
 
