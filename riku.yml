@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: riku
+  labels:
+        app: riku
+spec:
+  containers:
+  - name: riku
+    image: honeybee.azurecr.io/repo1:peachjaba
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: riku
+  namespace: default
+  labels:
+    app: riku
+ 
+spec:
+  externalTrafficPolicy: Local
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: riku
+  type: LoadBalancer
