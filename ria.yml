@@ -9,7 +9,7 @@ spec:
   - name: ria
     image: ria:latest
     ports:
-    - containerPort: 80
+    - containerPort: 443
 ---
 apiVersion: v1
 kind: Service
@@ -22,10 +22,10 @@ metadata:
 spec:
   externalTrafficPolicy: Local
   ports:
-  - name: http
-    port: 80
+  - name: https
+    port: 443
     protocol: TCP
-    targetPort: 80
+    targetPort: 443
   selector:
     app: ria
   type: LoadBalancer
