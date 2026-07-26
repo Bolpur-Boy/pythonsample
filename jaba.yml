@@ -6,7 +6,7 @@ metadata:
         app: jaba
 spec:
   containers:
-  - name: ria
+  - name: jaba
     image: sha256:5b14500a9778ddde820f03237cb37e7631c295d1c62c83fe5b5c334684ddea5b
     ports:
     - containerPort: 80
