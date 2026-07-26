@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
   - name: ria
-    image: honeybee.azurecr.io/repo1:peachjaba:latest
+    image: honeybee.azurecr.io/repo1:peachjaba
     ports:
     - containerPort: 80
 ---
