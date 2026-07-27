@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: jab
+    labels:
+        app: jab
+spec:
+  containers:
+  - name: jab
+    image: honeybee.azurecr.io/repo1:jaba
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jab
+  namespace: default
+  labels:
+    app: jab
+ 
+spec:
+  externalTrafficPolicy: Local
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: jab
+  type: LoadBalancer
