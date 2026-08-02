@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+name: nginx-blue
+namespace: blue-green-demo
+spec:
+replicas: 3
+selector:
+matchLabels:
+app: nginx
+version: blue
+template:
+metadata:
+labels:
+app: nginx
+version: blue
+spec:
+containers:
+- name: nginx
+image: nginx:1.20
+ports:
+- containerPort: 80
+volumeMounts:
+- name: html
+mountPath: /usr/share/nginx/html
+volumes:
+- name: html
+configMap:
+name: nginx-blue-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+name: nginx-blue-config
+namespace: blue-green-demo
+data:
+index.html: |
+<!DOCTYPE html>
+<html>
+<head>
+<title>Blue Version - Production</title>
+<style>
+body {
+background-color: #3498db;
+color: white;
+text-align: center;
+padding-top: 20%;
+font-family: Arial;
+}
+</style>
+</head>
+<body>
+<h1>🔵 BLUE VERSION (v1.0)</h1>
+<p>Current Production Environment</p>
+<p>This is the live version!</p>
+</body>
+</html>
