@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+name: nginx-service
+namespace: blue-green-demo
+spec:
+type: ClusterIP
+selector:
+app: nginx
+ports:
+- port: 80
+version: blue # Initially pointing to BLUE version
+targetPort: 80
