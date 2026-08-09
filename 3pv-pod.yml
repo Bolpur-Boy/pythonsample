@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: log-writer-pod
+spec:
+  volumes:
+    - name: log-writer-storage
+      persistentVolumeClaim:
+        claimName: logs-pv-claim
+  containers:
+    - name: log-writer-container
+      image: nginx
+      command:
+        - "sh"
+        - "-c"
+        - "while true; do echo $(date) >> /var/log/app/app.log; sleep 10; done"
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/var/log/app"
+          name: log-writer-storage
+
+
