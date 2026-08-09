@@ -2,11 +2,9 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: log-writer
-  labels:
-    app: log-writer
 spec:
   containers:
-    - name: log-writer
+    - name: log-writer-container
       image: busybox
       ports:
         - containerPort: 80
@@ -15,10 +13,6 @@ spec:
       args:
         - while true; do echo "$(09/08/2026)" >> /var/log/app/app.log; sleep 10; done
       volumeMounts:
-        - name: app-log-volume
+        - name: log-writer-storage
           mountPath: /var/log/app
-  volumes:
-    - name: app-log-volume
-      persistentVolumeClaim:
-        claimName: log-writer
   restartPolicy: Always
