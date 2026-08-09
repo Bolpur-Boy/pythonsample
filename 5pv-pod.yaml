@@ -12,9 +12,9 @@ spec:
         - "-c"
         - "while true; do echo $(date) >> /var/log/app/app.log; sleep 10; done"
       volumes:
-    - name: log-writer-storage
+    - name: logs-pv-storage
       persistentVolumeClaim:
-        claimName: log-writer-claim
+        claimName: log-pv-claim
   volumeMounts:
         - mountPath: "/var/log/app"
           name: log-writer-storage
