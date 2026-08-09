@@ -5,17 +5,17 @@ metadata:
   namespace: default
 spec:
   containers:
-    - name: log-writer-container
+    - name: logs-pv-container
       image: busybox
       command:
         - "sh"
         - "-c"
         - "while true; do echo $(date) >> /var/log/app/app.log; sleep 10; done"
       volumes:
-    - name: logs-pv-storage
+    - name: logs-pv
       persistentVolumeClaim:
         claimName: log-pv-claim
   volumeMounts:
         - mountPath: "/var/log/app"
-          name: log-writer-storage
+          name: logs-pv
 
