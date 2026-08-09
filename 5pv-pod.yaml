@@ -2,20 +2,19 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: log-writer
-  namespace: default
 spec:
   containers:
-    - name: logs-pv-container
+    - name: log-writer-container
       image: busybox
       command:
         - "sh"
         - "-c"
         - "while true; do echo $(date) >> /var/log/app/app.log; sleep 10; done"
       volumes:
-    - name: logs-pv
+    - name: logs-pv-storage
       persistentVolumeClaim:
-        claimName: log-pv-claim
+        claimName: logs-pv-claim
   volumeMounts:
         - mountPath: "/var/log/app"
-          name: logs-pv
+          name: logs-pv-storage
 
